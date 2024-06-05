@@ -46,12 +46,12 @@
     - name: Push VXLAN configuration
       ale.aos.aos_config:
         lines:
-          - service {{ SERVICE_ID }} vxlan vnid {{ VNID }} multicast-mode head-end
+          - service {{ SERVICE_ID }} vxlan vnid {{ VNID }} multicast-mode head-end vlan-xlation enable
           - service {{ SERVICE_ID }} bind-sdp {{ sdp_id }}
 
     - name: Push VXLAN access ports configuration
       ale.aos.aos_config:
         lines:
-          - service access port {{ item }} 
+          - service access port {{ item }} vlan-xlation enable
           - service {{ SERVICE_ID }} sap port {{ item }}:{{ ACCESS_PORTS_TAG_1 }}
       loop: "{{ SWITCH_1_ACCESS_PORTS }}"
